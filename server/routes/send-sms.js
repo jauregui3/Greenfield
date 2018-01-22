@@ -14,14 +14,12 @@ exports.sms = function(phoneData) {
       // message to job accepter
       client.messages.create({
         to: result.attributes.workerphone,
-        // from: result.attributes.userphone,
         from: phoneNumber,
         body: `-\n\nYou've accepted a job:\nClient: ${result.attributes.client}\nJob Details: ${result.attributes.job_info}\nBillable Hrs: ${result.attributes.duration}\nTO COMPLETE ORDER, REPLY WITH:\n${result.attributes.id}/<any job or work notes>`
       }, function(err, message) {
         if (err) {
           console.error(err);
         } else {
-          // console.log('message object', message);
           console.log(message.sid);
         }
       });
@@ -29,15 +27,12 @@ exports.sms = function(phoneData) {
       // message to job poster/creater
       client.messages.create({
         to: result.attributes.userphone,
-        // from: result.attributes.userphone,
         from: phoneNumber,
-        // Wrong data, but testing
         body: `-\n\n${result.attributes.workername} has accepted your job, ${result.attributes.job_info} (Order#:${result.attributes.id})`
       }, function(err, message) {
         if (err) {
           console.error(err);
         } else {
-          // console.log('message object', message);
           console.log(message.sid);
         }
       });
@@ -48,9 +43,7 @@ exports.sms = function(phoneData) {
 exports.message = function(messageData, cb) {
   //split message data to get back correct work order
   var data = messageData;
-  console.log('RECIEVED DATA:', data);
   var msgDataArray = data.Body.split('/');
-  console.log(msgDataArray);
   dbHelpers.updateOrder({
     id: msgDataArray[0],
     notes: msgDataArray[1] + '\n',
@@ -69,15 +62,12 @@ exports.message = function(messageData, cb) {
 var sendMessage = function(workOrderInfo) {
   client.messages.create({
     to: workOrderInfo.userphone,
-      // from: result.attributes.userphone,
     from: phoneNumber,
-      // Wrong data, but testing
     body: `-\n\n${workOrderInfo.workername} has completed your job!\nInfo: ${workOrderInfo.job_info} (${workOrderInfo.id})\nNotes: ${workOrderInfo.notes}`
     }, function(err, message) {
       if (err) {
         console.error(err);
       } else {
-        // console.log('message object', message);
         console.log(message.sid);
       }
     });
