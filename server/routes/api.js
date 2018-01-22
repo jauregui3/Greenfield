@@ -58,10 +58,7 @@ exports.getUnclaimed = (req, res) => {
   });
 };
 exports.getCompleted = (req, res) => {
-  // console.log(req.params);
-  // var isDone = (req.params.isDone === '1') ? 1 : 0;
   var phone = req.params.phone;
-  console.log('this is from api', phone, req.body)
   dbHelpers.getOrdersSelective({workerphone: phone, is_done: true}, (orders) => {
     res.send(orders);
   });
@@ -69,7 +66,6 @@ exports.getCompleted = (req, res) => {
 
 exports.getMyCreated = (req, res) => {
   var username = req.params.userName;
-  console.log('this is from api', username, req.body)
   dbHelpers.getOrdersSelective({username: username}, (orders) => {
     res.send(orders);
   });
@@ -77,7 +73,6 @@ exports.getMyCreated = (req, res) => {
 
 exports.getMyInProgress = (req, res) => {
   var phone = req.params.phone;
-  console.log('this is from api', phone, req.body)
   dbHelpers.getOrdersSelective({workerphone: phone, is_done: false}, (orders) => {
     res.send(orders);
   });
@@ -85,7 +80,6 @@ exports.getMyInProgress = (req, res) => {
 
 exports.getOrdersUsername = (req, res) => {
   var username = req.params.username;
-  console.log('this is from api', username, req.body)
   dbHelpers.getOrdersUsername({username: username}, (orders) => {
     res.send(orders);
   });
