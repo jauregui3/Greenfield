@@ -116,10 +116,6 @@ exports.getOrders = function (cb) {
   });
 };
 
-/*The two functions below- getOrdersSelective and getOrdersUsername, essentially do the same thing.  You could use getOrdersSelective to get orders based on username or any other database column, but our codebase uses getOrdersUsername.
-
-TODO: refactor to use getOrdersSelective and remove getOrdersUsername */
-
 exports.getOrdersSelective = function (queryObj, cb) {
   new WorkOrder(queryObj)
   .query('orderBy', 'id', 'desc')
@@ -130,15 +126,15 @@ exports.getOrdersSelective = function (queryObj, cb) {
   });
 };
 
-exports.getOrdersUsername = function (queryObj, cb) {
-  new WorkOrder(queryObj)
-  .query('orderBy', 'id', 'desc')
-  .where(queryObj)
-  .fetchAll()
-  .then(function (model) {
-    cb(model);
-  });
-};
+// exports.getOrdersUsername = function (queryObj, cb) {
+//   new WorkOrder(queryObj)
+//   .query('orderBy', 'id', 'desc')
+//   .where(queryObj)
+//   .fetchAll()
+//   .then(function (model) {
+//     cb(model);
+//   });
+// };
 
 //Create a new Work Order based on a query object.
 //If database schema changes, this function does not need to change.  Can still be used this way with different schema.
